@@ -1,2 +1,2 @@
-phonegap-commencer
+Commencer avec PhoneGap
 ==================
