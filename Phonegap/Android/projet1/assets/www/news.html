@@ -1,0 +1,59 @@
+<div id="news-list">
+	<h1>News</h1>
+	<div id="news-content"></div>	
+</div>
+
+
+<div id="news-details" class="hide">
+	<a href="#" class="btn-back">Back</a>
+
+	<h2>le titre</h2>
+
+	<div id="details-content">
+		le contenu
+	</div>
+</div>
+
+<script type="text/javascript">
+// URL des news
+var newsUrl = 'http://clients.dynapps.net/isesco%20rss/news.php';
+
+// Recuperer les news sous format JSON
+$.get(newsUrl, {lang: 'fr'}, function(data){
+	var json = eval('('+data+')');
+	$.each(json, function(i, obj){
+		var html = '<div class="news-item">';
+			html += '<img src="'+obj.img+'">';
+			html += '<p>'+obj.title+'"</p>';
+			html += '<div class="hide">'+obj.description+'"</div>';
+			html += '<br class="clr">';
+		html += '</div>';
+
+		// Ajouter le contenu formatte en HTML au conteneur des news
+		$('#news-content').append(html);
+		//console.log(obj.title);
+
+		$('.news-item').click(function(){
+			// Afficher le contenu, mais ou ?
+			$('#news-list').hide();
+			$('#news-details').show();
+
+			var html = $('.hide', $(this)).html(); // Recuperre le html
+			$('#details-content').html(html); // Mettre le html
+
+			var title = $('p', $(this)).text();
+			$('#news-details h2').text(title);
+
+			$('html, body').animate({scrollTop:0}, 'slow');
+
+		});
+
+		$('.btn-back').click(function(){
+			// Afficher le contenu, mais ou ?
+			$('#news-list').show();
+			$('#news-details').hide();
+			return false;
+		});
+	});
+});
+</script>
